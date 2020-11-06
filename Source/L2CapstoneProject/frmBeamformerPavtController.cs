@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using NationalInstruments.ModularInstruments.NIRfsg;
 using NationalInstruments.RFmx.InstrMX;
 using NationalInstruments.ModularInstruments.SystemServices.DeviceServices;
+using System.Collections.Generic;
 
 namespace L2CapstoneProject
 {
@@ -11,11 +12,13 @@ namespace L2CapstoneProject
     {
         NIRfsg rfsg;
         RFmxInstrMX instr;
+        List<PhaseAmplitudeOffset> offsets;
 
         public frmBeamformerPavtController()
         {
             InitializeComponent();
             LoadDeviceNames();
+            offsets = new List<PhaseAmplitudeOffset>();
         }
 
         private void LoadDeviceNames()
@@ -133,25 +136,40 @@ namespace L2CapstoneProject
                     Amplitude = dialog.GetAmp()
                 };
 
+                offsets.Add(newValue);
+
                 // create new listview item to store phase/amp values and add to list
-                ListViewItem newItem;
-                string[] arr = new string[2];
-                arr[0] = newValue.Phase.ToString();
-                arr[1] = newValue.Amplitude.ToString();
-                newItem = new ListViewItem(arr);
-                lsvOffsets.Items.Add(newItem);
+                
+                lsvOffsets.Items.Add(CreateListViewItem(newValue));
 
             }
         }
+
+        private ListViewItem CreateListViewItem(PhaseAmplitudeOffset newValue)
+        {
+            string[] itemText = new string[2];
+            itemText[0] = newValue.Phase.ToString();
+            itemText[1] = newValue.Amplitude.ToString();
+            return new ListViewItem(itemText);
+        }
+
         private void EditOffset(int selected)
         {
             // Will need to pass in the currently selected item
             frmOffset dialog = new frmOffset(frmOffset.Mode.Edit);
-            DialogResult r = dialog.ShowDialog()
+            dialog.SetAmp(offsets[selected].Amplitude);
+            dialog.SetPhase(offsets[selected].Phase);
+            DialogResult r = dialog.ShowDialog();
 
             if (r == DialogResult.OK)
             {
-                // Edit the offset shown in the listview
+                var newPhase = dialog.GetPhase();
+                var newAmp = dialog.GetAmp();
+                offsets[selected].Phase = newPhase;
+                offsets[selected].Amplitude = newAmp;
+
+
+                lsvOffsets.Items[selected] = CreateListViewItem(offsets[selected]);
             }
         }
 
@@ -159,6 +177,7 @@ namespace L2CapstoneProject
         private void RemoveOffset(int selected)
         {
             lsvOffsets.Items.RemoveAt(selected);
+            offsets.Remove(offsets[selected]);
         }
         #endregion
         #region Utility Functions
