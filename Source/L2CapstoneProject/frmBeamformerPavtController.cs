@@ -129,8 +129,8 @@ namespace L2CapstoneProject
                 // Create new variable to hold phase and amplitude values
                 PhaseAmplitudeOffset newValue = new PhaseAmplitudeOffset
                 {
-                    Phase = dialog.getPhase(),
-                    Amplitude = dialog.getAmp()
+                    Phase = dialog.GetPhase(),
+                    Amplitude = dialog.GetAmp()
                 };
 
                 // create new listview item to store phase/amp values and add to list
@@ -147,8 +147,7 @@ namespace L2CapstoneProject
         {
             // Will need to pass in the currently selected item
             frmOffset dialog = new frmOffset(frmOffset.Mode.Edit);
-
-            DialogResult r = dialog.ShowDialog();
+            DialogResult r = dialog.ShowDialog()
 
             if (r == DialogResult.OK)
             {

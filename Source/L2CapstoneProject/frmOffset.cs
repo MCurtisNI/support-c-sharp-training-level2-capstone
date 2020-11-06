@@ -28,14 +28,24 @@ namespace L2CapstoneProject
 
         }
 
-        public decimal getPhase()
+        public decimal GetPhase()
         {
             return numPhase.Value;
         }
 
-        public decimal getAmp()
+        public decimal GetAmp()
         {
             return numAmp.Value;
+        }
+
+        public void SetPhase(decimal phaseOffset)
+        {
+            numPhase.Value = phaseOffset;
+        }
+
+        public void SetAmp(decimal ampOffset)
+        {
+            numAmp.Value = ampOffset;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
