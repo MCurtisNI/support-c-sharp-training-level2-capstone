@@ -57,9 +57,12 @@
     <Compile Include="frmOffset.Designer.cs">
       <DependentUpon>frmOffset.cs</DependentUpon>
     </Compile>
+    <Compile Include="IBeamformer.cs" />
+    <Compile Include="IQWaveform.cs" />
     <Compile Include="PhaseAmplitudeOffset.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulatedSequencedBeamformer.cs" />
     <EmbeddedResource Include="frmBeamformerPavtController.resx">
       <DependentUpon>frmBeamformerPavtController.cs</DependentUpon>
     </EmbeddedResource>

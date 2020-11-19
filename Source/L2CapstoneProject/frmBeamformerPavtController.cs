@@ -110,7 +110,6 @@ namespace L2CapstoneProject
         private void TestSequencedBeamformer()
         {
             var beamformer = new SimulatedSequencedBeamformer((double)((measurementLengthNumeric.Value + measurementOffsetNumeric.Value)/(decimal)1E6));
-            double stepsize = 1.0;
             beamformer.Connect();
             beamformer.LoadSequence("sequence1");
             //begin measurement
