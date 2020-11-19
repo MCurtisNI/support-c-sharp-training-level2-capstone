@@ -4,13 +4,14 @@ using NationalInstruments.ModularInstruments.NIRfsg;
 using NationalInstruments.RFmx.InstrMX;
 using NationalInstruments.ModularInstruments.SystemServices.DeviceServices;
 using System.Collections.Generic;
+using NationalInstruments;
 
 namespace L2CapstoneProject
 {
 
     public partial class frmBeamformerPavtController : Form
     {
-        NIRfsg rfsg;
+        NIRfsg _rfsgSession;
         RFmxInstrMX instr;
         List<PhaseAmplitudeOffset> offsets;
 
@@ -36,6 +37,17 @@ namespace L2CapstoneProject
                 rfsaNameComboBox.SelectedIndex = 0;
         }
         #region UI Events
+        
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            StartGeneration();
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            AbortGeneration();
+        }
+        
         private void btnAddOffset_Click(object sender, EventArgs e)
         {
             AddOffset();
@@ -94,6 +106,7 @@ namespace L2CapstoneProject
         #endregion
         #region Program Functions
 
+
         private void TestSteppedBeamformer()
         {
             var beamformer = new SimulatedSteppedBeamformer();
@@ -117,20 +130,114 @@ namespace L2CapstoneProject
             beamformer.Disconnect();
         }
 
+        
+       
+        void StartGeneration()
+        {
+            /*
+            string resourceName;
+            double frequency, frequencyOffset, power, actualIQRate;
+            //decimal phase, phaseOffset, amplitude, amplitudeOffset;
+            int numSamples = 100; //use waveform quantum to find num samples instead?
+            //double[] iData, qData;
+            */
+            ComplexWaveform<ComplexDouble> IQData;
+
+            try
+            {
+                //read in control values
+                /*
+                resourceName = rfsaNameComboBox.Text;
+                frequency = (double)frequencyNumeric.Value;
+                power = (double)powerLevelNumeric.Value;
+                
+
+                //initialize rfsg session
+                _rfsgSession = new NIRfsg(resourceName, true, false);
+
+                //subscribe to rfsg warnings
+                _rfsgSession.DriverOperation.Warning += new EventHandler<RfsgWarningEventArgs>(DriverOperation_Warning);
+
+                //configure generator
+                _rfsgSession.RF.Configure(frequency, power);
+                _rfsgSession.Arb.GenerationMode = RfsgWaveformGenerationMode.ArbitraryWaveform;
+                _rfsgSession.Arb.IQRate = 50e6;
+                actualIQRate = _rfsgSession.Arb.IQRate;
+                frequencyOffset = actualIQRate / numSamples;
+                _rfsgSession.Arb.SignalBandwidth = 2 * frequencyOffset;
+                */
+                //IQData = createWaveform(offsets.Count); //numSamples or offsets.count?
+
+                //PrecisionTimeSpan dt = PrecisionTimeSpan.FromSeconds(1 / actualIQRate);
+                //IQData.PrecisionTiming = PrecisionWaveformTiming.CreateWithRegularInterval(dt);
+
+                //_rfsgSession.Arb.WriteWaveform<ComplexDouble>("", IQData);
+                //_rfsgSession.RF.
+
+                //initiate generation
+                _rfsgSession.Initiate();
+
+                //activate stop button
+                btnStop.Focus();
+              
+
+            }
+            catch(Exception ex)
+            {
+                ShowError("StartGeneration()", ex);
+            }
+        }
+
+        //Function to create the waveform data to be generated
+        /*
+        ComplexWaveform<ComplexDouble> createWaveform(int numSamples)
+        {
+            //public static ComplexWaveform<TData> FromArray1D(TData[] array);
+            ComplexWaveform<ComplexDouble> complexWaveform;
+            ComplexDouble[] IQData = new ComplexDouble[numSamples];
+
+            //IQData[0] = ComplexDouble.FromPolar((double)offsets[0].Amplitude, (double)offsets[0].Phase);
+            for(int i = 0; i < numSamples; i++)
+            {
+                IQData[i] = ComplexDouble.FromPolar((double)offsets[i].Amplitude, (double)offsets[i].Phase);
+            }
+
+            complexWaveform = ComplexWaveform<ComplexDouble>.FromArray1D(IQData);
+
+            return complexWaveform;
+        }
+        */
+
+        //CW: numSamples = 100, amp = 1, phaseDegrees = 0, numCycles = 1
+        static double[] sinePattern(int numSamples, double amplitude, double phaseDegrees, double numCycles)
+        {
+            double[] sineArray = new double[numSamples];
+            for(int i = 0; i < numSamples; i++)
+            {
+                sineArray[i] = amplitude * Math.Sin(2 * Math.PI * i * numCycles / numSamples + Math.PI * phaseDegrees / 180); //m(t) = Asin(2*pi*f*t + theta)
+            }
+            return sineArray;
+        }
+
+        void DriverOperation_Warning(object sender, RfsgWarningEventArgs e)
+        {
+            errorTextBox.Text = e.Message;
+        }
+        
 
         private void AbortGeneration()
         {
             SetButtonState(false);
 
-            if (rfsg?.IsDisposed == false)
+            if (_rfsgSession?.IsDisposed == false)
             {
-                rfsg.Abort();
+                _rfsgSession.Abort();
             }
         }
         private void CloseInstruments()
         {
             AbortGeneration();
-            rfsg?.Close();
+            _rfsgSession?.Close();
 
             instr?.Close();
         }
@@ -166,12 +273,12 @@ namespace L2CapstoneProject
                     Amplitude = dialog.GetAmp()
                 };
 
-                offsets.Add(newOffset);
+                offsets.Add(newOffset); //List<PhaseAmplitudeOffset> offset
 
                 // create new listview item to store phase/amp values and add to list
                 
                 lsvOffsets.Items.Add(CreateListViewItem(newOffset));
-
+                
             }
         }
 
@@ -199,7 +306,7 @@ namespace L2CapstoneProject
                 offsets[selected].Amplitude = newAmp;
 
 
-                lsvOffsets.Items[selected] = CreateListViewItem(offsets[selected]);
+                lsvOffsets.Items[selected] = CreateListViewItem(offsets[selected]); //grabs selected items from offsets list, stores in listviewitem, adds to listview
             }
         }
 
