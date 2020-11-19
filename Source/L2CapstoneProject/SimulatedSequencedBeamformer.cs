@@ -34,17 +34,27 @@ namespace L2CapstoneProject
 
         public void Connect()
         {
+            try
+            { 
             PopulateSequenceList();
             waveformNamesLoaded = new List<string>();
             session = new NIRfsg(VSGName, false, true);
             session.RF.Frequency = CenterFrequency; 
             session.Arb.GenerationMode = RfsgWaveformGenerationMode.ArbitraryWaveform;
             session.Arb.IQRate = IQRate;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error in Connect()\n" + ex.Message);
+            }
         }
 
         public void Disconnect()
         {
-            session.Dispose();
+            if (!session.IsDisposed)
+            {
+                session.Dispose();
+            }
         }
 
         public void LoadSequence(string sequenceName)
@@ -64,8 +74,16 @@ namespace L2CapstoneProject
 
         public void LoadSequence(string SequenceName, List<PhaseAmplitudeOffset> offsets)
         {
-            var waveform = CreateWaveform(offsets);
-            session.Arb.WriteWaveform(SequenceName, waveform.IData, waveform.QData);
+            try
+            {
+                var waveform = CreateWaveform(offsets);
+                session.Arb.WriteWaveform(SequenceName, waveform.IData, waveform.QData);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error in Load Waveform()\n" + ex.Message);
+            }
+          
         }
 
         private IQWaveform CreateWaveform(List<PhaseAmplitudeOffset> offsets)
@@ -104,7 +122,11 @@ namespace L2CapstoneProject
 
         public void AbortSequence()
         {
-            session.Abort();
+            if (!session.IsDisposed)
+            {
+                session.Abort();
+            }
+
         }
 
 
