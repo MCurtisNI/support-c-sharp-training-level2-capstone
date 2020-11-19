@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace L2CapstoneProject
 {
-    class SimulatedSteppedBF : IDynamicBeamformer
+    class SimulatedSteppedBeamformer : ISteppedBeamformer
     {
         NIRfsg _rfsgSession;
         frmBeamformerPavtController beamformerPavt = new frmBeamformerPavtController();
@@ -74,15 +74,12 @@ namespace L2CapstoneProject
             {
                 MessageBox.Show("Error in Connect()\n" + ex.Message);
             }
-
-                throw new NotImplementedException();
         }
 
         public void Disconnect()
         {
             _rfsgSession.Abort();
             
-            throw new NotImplementedException();
         }
 
         public void LoadOffset(PhaseAmplitudeOffset offset)
@@ -90,8 +87,6 @@ namespace L2CapstoneProject
             //get phase and amplitude
             _rfsgSession.RF.PhaseOffset = (double)offset.Phase;
             _rfsgSession.RF.PowerLevel = (double)offset.Amplitude;
-
-            throw new NotImplementedException();
         }
 
         void DriverOperation_Warning(object sender, RfsgWarningEventArgs e)
