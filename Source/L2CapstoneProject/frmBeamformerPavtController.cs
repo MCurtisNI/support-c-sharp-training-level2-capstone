@@ -81,6 +81,11 @@ namespace L2CapstoneProject
             }
         }
 
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+            TestSteppedBeamformer();
+        }
+
         private void frmBeamformerPavtController_FormClosing(object sender, FormClosingEventArgs e)
         {
             CloseInstruments();
@@ -88,6 +93,32 @@ namespace L2CapstoneProject
 
         #endregion
         #region Program Functions
+
+        private void TestSteppedBeamformer()
+        {
+            var beamformer = new SimulatedSteppedBeamformer();
+            beamformer.Connect();
+            foreach (var offset in offsets)
+            {
+                beamformer.LoadOffset(offset);
+                //measure
+                var result = MessageBox.Show($"Measure\n\nExpected Result:\nPhase: {offset.Phase}\nAmplitude: {offset.Amplitude}");
+            }
+            beamformer.Disconnect();
+        }
+
+        private void TestSequencedBeamformer()
+        {
+            var beamformer = new SimulatedSequencedBeamformer((double)((measurementLengthNumeric.Value + measurementOffsetNumeric.Value)/(decimal)1E6));
+            double stepsize = 1.0;
+            beamformer.Connect();
+            beamformer.LoadSequence("sequence1");
+            //begin measurement
+            beamformer.InitiateSequence("sequence1");
+            beamformer.Disconnect();
+        }
+
+
         private void AbortGeneration()
         {
             SetButtonState(false);
@@ -202,5 +233,7 @@ namespace L2CapstoneProject
         }
 
         #endregion
+
+    
     }
 }
