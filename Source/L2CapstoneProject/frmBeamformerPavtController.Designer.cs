@@ -76,7 +76,7 @@
             this.lsvOffsets.GridLines = true;
             this.lsvOffsets.HideSelection = false;
             this.lsvOffsets.Location = new System.Drawing.Point(26, 54);
-            this.lsvOffsets.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lsvOffsets.Margin = new System.Windows.Forms.Padding(4);
             this.lsvOffsets.Name = "lsvOffsets";
             this.lsvOffsets.Size = new System.Drawing.Size(470, 308);
             this.lsvOffsets.TabIndex = 1;
@@ -99,7 +99,7 @@
             // btnAddOffset
             // 
             this.btnAddOffset.Location = new System.Drawing.Point(26, 375);
-            this.btnAddOffset.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnAddOffset.Margin = new System.Windows.Forms.Padding(6);
             this.btnAddOffset.Name = "btnAddOffset";
             this.btnAddOffset.Size = new System.Drawing.Size(150, 44);
             this.btnAddOffset.TabIndex = 2;
@@ -111,7 +111,7 @@
             // 
             this.btnEditOffset.Enabled = false;
             this.btnEditOffset.Location = new System.Drawing.Point(188, 375);
-            this.btnEditOffset.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnEditOffset.Margin = new System.Windows.Forms.Padding(6);
             this.btnEditOffset.Name = "btnEditOffset";
             this.btnEditOffset.Size = new System.Drawing.Size(150, 44);
             this.btnEditOffset.TabIndex = 2;
@@ -130,9 +130,9 @@
             this.configurationGroupBox.Controls.Add(this.powerLevelNumeric);
             this.configurationGroupBox.Controls.Add(this.powerLevelLabel);
             this.configurationGroupBox.Location = new System.Drawing.Point(56, 140);
-            this.configurationGroupBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.configurationGroupBox.Margin = new System.Windows.Forms.Padding(6);
             this.configurationGroupBox.Name = "configurationGroupBox";
-            this.configurationGroupBox.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.configurationGroupBox.Padding = new System.Windows.Forms.Padding(6);
             this.configurationGroupBox.Size = new System.Drawing.Size(596, 238);
             this.configurationGroupBox.TabIndex = 13;
             this.configurationGroupBox.TabStop = false;
@@ -146,7 +146,7 @@
             0,
             0});
             this.measurementLengthNumeric.Location = new System.Drawing.Point(318, 75);
-            this.measurementLengthNumeric.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.measurementLengthNumeric.Margin = new System.Windows.Forms.Padding(6);
             this.measurementLengthNumeric.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -175,7 +175,7 @@
             0,
             0});
             this.frequencyNumeric.Location = new System.Drawing.Point(26, 75);
-            this.frequencyNumeric.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.frequencyNumeric.Margin = new System.Windows.Forms.Padding(6);
             this.frequencyNumeric.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -233,7 +233,7 @@
             0,
             0});
             this.measurementOffsetNumeric.Location = new System.Drawing.Point(318, 167);
-            this.measurementOffsetNumeric.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.measurementOffsetNumeric.Margin = new System.Windows.Forms.Padding(6);
             this.measurementOffsetNumeric.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -252,7 +252,7 @@
             // 
             this.powerLevelNumeric.DecimalPlaces = 2;
             this.powerLevelNumeric.Location = new System.Drawing.Point(26, 167);
-            this.powerLevelNumeric.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.powerLevelNumeric.Margin = new System.Windows.Forms.Padding(6);
             this.powerLevelNumeric.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -286,7 +286,7 @@
             // 
             this.btnDeleteOffset.Enabled = false;
             this.btnDeleteOffset.Location = new System.Drawing.Point(350, 375);
-            this.btnDeleteOffset.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnDeleteOffset.Margin = new System.Windows.Forms.Padding(6);
             this.btnDeleteOffset.Name = "btnDeleteOffset";
             this.btnDeleteOffset.Size = new System.Drawing.Size(150, 44);
             this.btnDeleteOffset.TabIndex = 2;
@@ -317,7 +317,7 @@
             // rfsgNameComboBox
             // 
             this.rfsgNameComboBox.Location = new System.Drawing.Point(56, 62);
-            this.rfsgNameComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rfsgNameComboBox.Margin = new System.Windows.Forms.Padding(6);
             this.rfsgNameComboBox.Name = "rfsgNameComboBox";
             this.rfsgNameComboBox.Size = new System.Drawing.Size(236, 33);
             this.rfsgNameComboBox.TabIndex = 12;
@@ -325,7 +325,7 @@
             // errorTextBox
             // 
             this.errorTextBox.Location = new System.Drawing.Point(56, 888);
-            this.errorTextBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.errorTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.errorTextBox.Multiline = true;
             this.errorTextBox.Name = "errorTextBox";
             this.errorTextBox.ReadOnly = true;
@@ -338,7 +338,7 @@
             // btnStart
             // 
             this.btnStart.Location = new System.Drawing.Point(760, 56);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(6);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(150, 44);
             this.btnStart.TabIndex = 14;
@@ -352,9 +352,9 @@
             this.groupBox1.Controls.Add(this.btnDeleteOffset);
             this.groupBox1.Controls.Add(this.btnAddOffset);
             this.groupBox1.Location = new System.Drawing.Point(56, 390);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox1.Size = new System.Drawing.Size(596, 442);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
@@ -363,7 +363,7 @@
             // rfsaNameComboBox
             // 
             this.rfsaNameComboBox.Location = new System.Drawing.Point(344, 62);
-            this.rfsaNameComboBox.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.rfsaNameComboBox.Margin = new System.Windows.Forms.Padding(6);
             this.rfsaNameComboBox.Name = "rfsaNameComboBox";
             this.rfsaNameComboBox.Size = new System.Drawing.Size(236, 33);
             this.rfsaNameComboBox.TabIndex = 12;
@@ -382,7 +382,7 @@
             // 
             this.btnStop.Enabled = false;
             this.btnStop.Location = new System.Drawing.Point(922, 56);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(6);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(150, 44);
             this.btnStop.TabIndex = 14;
@@ -394,9 +394,9 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.lsvResults);
             this.groupBox2.Location = new System.Drawing.Point(684, 142);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(492, 690);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
@@ -422,7 +422,7 @@
             this.lsvResults.GridLines = true;
             this.lsvResults.HideSelection = false;
             this.lsvResults.Location = new System.Drawing.Point(22, 73);
-            this.lsvResults.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lsvResults.Margin = new System.Windows.Forms.Padding(4);
             this.lsvResults.Name = "lsvResults";
             this.lsvResults.Size = new System.Drawing.Size(438, 537);
             this.lsvResults.TabIndex = 0;
@@ -432,15 +432,17 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Index";
+            this.columnHeader3.Width = 95;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "Phase (°)";
+            this.columnHeader5.Width = 120;
             // 
             // columnHeader6
             // 
             this.columnHeader6.Text = "Amplitude (dB)";
-            this.columnHeader6.Width = 97;
+            this.columnHeader6.Width = 188;
             // 
             // frmBeamformerPavtController
             // 
@@ -459,7 +461,7 @@
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBeamformerPavtController";
@@ -487,20 +489,16 @@
         private System.Windows.Forms.Button btnAddOffset;
         private System.Windows.Forms.Button btnEditOffset;
         private System.Windows.Forms.GroupBox configurationGroupBox;
-        private System.Windows.Forms.NumericUpDown frequencyNumeric;
         private System.Windows.Forms.Label frequencyLabel;
-        private System.Windows.Forms.NumericUpDown powerLevelNumeric;
         private System.Windows.Forms.Label powerLevelLabel;
         private System.Windows.Forms.Button btnDeleteOffset;
         private System.Windows.Forms.Label resourceNameLabel;
         private System.Windows.Forms.Label errorLabel;
-        private System.Windows.Forms.ComboBox rfsgNameComboBox;
         private System.Windows.Forms.TextBox errorTextBox;
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ComboBox rfsaNameComboBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ListView lsvResults;
         private System.Windows.Forms.ColumnHeader columnHeader3;
@@ -511,6 +509,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown measurementOffsetNumeric;
+        public System.Windows.Forms.ComboBox rfsgNameComboBox;
+        public System.Windows.Forms.NumericUpDown frequencyNumeric;
+        public System.Windows.Forms.NumericUpDown powerLevelNumeric;
+        public System.Windows.Forms.Button btnStop;
     }
 }
 
