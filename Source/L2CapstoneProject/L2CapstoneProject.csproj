@@ -64,6 +64,8 @@
       <DependentUpon>frmOffset.cs</DependentUpon>
     </Compile>
     <Compile Include="IBeamformer.cs" />
+    <Compile Include="IQWaveform.cs" />
+    <Compile Include="SimulatedSequencedBeamformer.cs" />
     <Compile Include="PhaseAmplitudeOffset.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

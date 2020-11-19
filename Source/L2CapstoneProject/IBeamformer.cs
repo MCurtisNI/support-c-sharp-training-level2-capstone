@@ -13,19 +13,21 @@ namespace L2CapstoneProject
         void Disconnect();
     }
 
-    interface ISequencedBeamformer: IBeamformer
+    interface ISequencedBeamformer : IBeamformer
     {
-        void LoadSequence();
+        void LoadSequence(string sequenceName);
 
-        void InitiateSequence();
+        void LoadSequence(string sequenceName, List<PhaseAmplitudeOffset> offsets);
+
+        void InitiateSequence(string sequenceName);
 
         void AbortSequence();
     }
 
-    interface IDynamicBeamformer: IBeamformer
+    interface ISteppedBeamformer : IBeamformer
     {
         void LoadOffset(PhaseAmplitudeOffset offset);
     }
 
-    interface IDynamicSequencedBeamformer : ISequencedBeamformer, IDynamicBeamformer { }
 }
+
