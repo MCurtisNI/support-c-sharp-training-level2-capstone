@@ -116,6 +116,7 @@ namespace L2CapstoneProject
                 beamformer.LoadOffset(offset);
                 //measure
                 var result = MessageBox.Show($"Measure\n\nExpected Result:\nPhase: {offset.Phase}\nAmplitude: {offset.Amplitude}");
+
             }
             beamformer.Disconnect();
         }
@@ -130,57 +131,56 @@ namespace L2CapstoneProject
             beamformer.Disconnect();
         }
 
+        void startMeasurements()
+        {
+            int numSteps = offsets.Count;
+            double[] amplitudes = new double[numSteps];
+            double[] phases = new double[numSteps];
+            Tuple<double[], double[]> measurements;
+            decimal amp;
+            decimal phase;
+
+            try
+            {
+                PAVTMeasurement pavtMeasure = new PAVTMeasurement(rfsaNameComboBox.Text);
+                pavtMeasure.configureMeasurements(numSteps, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value, (double)measurementOffsetNumeric.Value, (double)measurementLengthNumeric.Value);
+
+                foreach (var offset in offsets)
+                {
+                    measurements = pavtMeasure.GetMeasurements();
+                    phase = Convert.ToDecimal(measurements.Item1);
+                    amp = Convert.ToDecimal(measurements.Item2);
+                    PhaseAmplitudeOffset newValues = new PhaseAmplitudeOffset(phase, amp);
+                    lsvResults.Items.Add(CreateListViewItem(newValues)); // add results to results listview
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("startMeasurements()", ex);
+            }
+        }
         
        
         void StartGeneration()
         {
-            /*
-            string resourceName;
-            double frequency, frequencyOffset, power, actualIQRate;
-            //decimal phase, phaseOffset, amplitude, amplitudeOffset;
-            int numSamples = 100; //use waveform quantum to find num samples instead?
-            //double[] iData, qData;
-            */
-            ComplexWaveform<ComplexDouble> IQData;
+            //bool isMeasurementComplete = false; 
 
             try
             {
-                //read in control values
-                /*
-                resourceName = rfsaNameComboBox.Text;
-                frequency = (double)frequencyNumeric.Value;
-                power = (double)powerLevelNumeric.Value;
                 
+                SimulatedSteppedBeamformer simulatedSteppedBF = new SimulatedSteppedBeamformer(rfsgNameComboBox.Text, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value);
+                simulatedSteppedBF.Connect();
 
-                //initialize rfsg session
-                _rfsgSession = new NIRfsg(resourceName, true, false);
-
-                //subscribe to rfsg warnings
-                _rfsgSession.DriverOperation.Warning += new EventHandler<RfsgWarningEventArgs>(DriverOperation_Warning);
-
-                //configure generator
-                _rfsgSession.RF.Configure(frequency, power);
-                _rfsgSession.Arb.GenerationMode = RfsgWaveformGenerationMode.ArbitraryWaveform;
-                _rfsgSession.Arb.IQRate = 50e6;
-                actualIQRate = _rfsgSession.Arb.IQRate;
-                frequencyOffset = actualIQRate / numSamples;
-                _rfsgSession.Arb.SignalBandwidth = 2 * frequencyOffset;
-                */
-                //IQData = createWaveform(offsets.Count); //numSamples or offsets.count?
-
-                //PrecisionTimeSpan dt = PrecisionTimeSpan.FromSeconds(1 / actualIQRate);
-                //IQData.PrecisionTiming = PrecisionWaveformTiming.CreateWithRegularInterval(dt);
-
-                //_rfsgSession.Arb.WriteWaveform<ComplexDouble>("", IQData);
-                //_rfsgSession.RF.
-
-                //initiate generation
-                _rfsgSession.Initiate();
-
-                //activate stop button
-                btnStop.Focus();
-              
-
+                for(int i = 0; i < offsets.Count; i++)
+                {
+                    simulatedSteppedBF.LoadOffset(offsets[i]); // set phase offset and power level
+                    ComplexWaveform<ComplexDouble> IQData = simulatedSteppedBF.createWaveform(offsets); //creates complex waveform data
+                    simulatedSteppedBF.writeWaveform(IQData); //generate waveform
+                    this.startMeasurements(); //take measurements
+                    simulatedSteppedBF.Disconnect();
+                }
+                
+                
             }
             catch(Exception ex)
             {
