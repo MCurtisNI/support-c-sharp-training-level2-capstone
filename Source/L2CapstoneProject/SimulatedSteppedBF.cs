@@ -13,25 +13,31 @@ namespace L2CapstoneProject
     class SimulatedSteppedBeamformer : ISteppedBeamformer
     {
         NIRfsg _rfsgSession;
-        frmBeamformerPavtController beamformerPavt = new frmBeamformerPavtController();
-        //List<PhaseAmplitudeOffset> offsets;
+        string resourceName;
+        double frequency, power, frequencyOffset, actualIQRate;
+        int numSamples = 100; //use waveform quantum to find num samples instead?
+
+        public SimulatedSteppedBeamformer(string ResourceName, double Freq, double Power)
+        {
+            resourceName = ResourceName;
+            frequency = Freq;
+            power = Power;
+        }
 
         public void Connect()
         {
-            string resourceName;
-            double frequency, frequencyOffset, power, actualIQRate;
+            //string resourceName;
+            //double frequency, frequencyOffset, power, actualIQRate;
             //decimal phase, phaseOffset, amplitude, amplitudeOffset;
-            int numSamples = 100; //use waveform quantum to find num samples instead?
-            double[] iData, qData;
+            //double[] iData, qData;
+            //double frequencyOffset, actualIQRate;
+            //int numSamples = 100; //use waveform quantum to find num samples instead?
+
             ComplexWaveform<ComplexDouble> IQData = new ComplexWaveform<ComplexDouble>(numSamples);
             List<PhaseAmplitudeOffset> offsets = new List<PhaseAmplitudeOffset>();
 
             try
             {
-                
-                resourceName = beamformerPavt.rfsgNameComboBox.Text;
-                frequency = (double)beamformerPavt.frequencyNumeric.Value;
-                power = (double)beamformerPavt.powerLevelNumeric.Value;
 
                 //initialize rfsg session
                 _rfsgSession = new NIRfsg(resourceName, true, false);
@@ -46,28 +52,9 @@ namespace L2CapstoneProject
                 frequencyOffset = actualIQRate / numSamples;
                 _rfsgSession.Arb.SignalBandwidth = 2 * frequencyOffset;
 
-                iData = new double[numSamples];
-                qData = new double[numSamples];
-                iData = sinePattern(numSamples, 1.0, 0.0, 1.0);
-                qData = sinePattern(numSamples, 1.0, 0.0, 1.0);
+                //stimulate w/ CW
+                stimulateDUTwithCW(numSamples);
 
-                //generate a cw to stimulate dut 
-                _rfsgSession.Arb.WriteWaveform("", iData, qData);
-                _rfsgSession.Initiate();
-                System.Threading.Thread.Sleep(100);
-                _rfsgSession.Abort();
-
-                /*
-                  rest of code to write offsets
-                 
-
-                 PrecisionTimeSpan dt = PrecisionTimeSpan.FromSeconds(1 / actualIQRate);
-                 IQData.PrecisionTiming = PrecisionWaveformTiming.CreateWithRegularInterval(dt);
-                _rfsgSession.Arb.WriteWaveform("", createWaveform(offsets));
-                _rfsgSession.Initiate();
-
-                beamformerPavt.btnStop.Focus();
-                */
 
             }
             catch (Exception ex)
@@ -105,7 +92,7 @@ namespace L2CapstoneProject
             return sineArray;
         }
 
-        ComplexWaveform<ComplexDouble> createWaveform(List<PhaseAmplitudeOffset> offsets)
+        public ComplexWaveform<ComplexDouble> createWaveform(List<PhaseAmplitudeOffset> offsets)
         {
             ComplexWaveform<ComplexDouble> complexWaveform;
             ComplexDouble[] IQData = new ComplexDouble[offsets.Count];
@@ -118,6 +105,37 @@ namespace L2CapstoneProject
             complexWaveform = ComplexWaveform<ComplexDouble>.FromArray1D(IQData);
 
             return complexWaveform;
+        }
+
+        void stimulateDUTwithCW(int numSamples)
+        {
+            double[] iData, qData;
+            iData = new double[numSamples];
+            qData = new double[numSamples]; 
+            iData = sinePattern(numSamples, 1.0, 0.0, 1.0);
+            qData = sinePattern(numSamples, 1.0, 0.0, 1.0);
+
+            //generate a cw to stimulate dut 
+            _rfsgSession.Arb.WriteWaveform("", iData, qData);
+            _rfsgSession.Initiate();
+            System.Threading.Thread.Sleep(100);
+            _rfsgSession.Abort();
+
+        }
+
+        public void writeWaveform(ComplexWaveform<ComplexDouble> IQdata) //input is complex waveform that was created using createWaveform(offsets);
+        {
+            //rest of code to write offsets
+            ComplexWaveform<ComplexDouble> NewIQData = new ComplexWaveform<ComplexDouble>(numSamples);
+            //List<PhaseAmplitudeOffset> offsetList = new List<PhaseAmplitudeOffset>();
+
+            PrecisionTimeSpan dt = PrecisionTimeSpan.FromSeconds(1 / actualIQRate);
+            IQdata.PrecisionTiming = PrecisionWaveformTiming.CreateWithRegularInterval(dt);
+            _rfsgSession.Arb.WriteWaveform("", IQdata);
+            _rfsgSession.Initiate();
+
+            //ComplexWaveform<ComplexDouble> IQdata
+
         }
 
     }
