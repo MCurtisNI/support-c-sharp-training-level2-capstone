@@ -17,9 +17,9 @@ namespace L2CapstoneProject
         double frequency, power, frequencyOffset, actualIQRate;
         int numSamples = 100; //use waveform quantum to find num samples instead?
 
-        public SimulatedSteppedBeamformer(string ResourceName, double Freq, double Power)
+        public SimulatedSteppedBeamformer(NIRfsg Session, double Freq, double Power)
         {
-            resourceName = ResourceName;
+            _rfsgSession = Session;
             frequency = Freq;
             power = Power;
         }
@@ -40,13 +40,12 @@ namespace L2CapstoneProject
             {
 
                 //initialize rfsg session
-                _rfsgSession = new NIRfsg(resourceName, true, false);
                 //subscribe to rfsg warnings
                 _rfsgSession.DriverOperation.Warning += new EventHandler<RfsgWarningEventArgs>(DriverOperation_Warning);
 
                 //configure generator
                 _rfsgSession.RF.Configure(frequency, power);
-                _rfsgSession.Arb.GenerationMode = RfsgWaveformGenerationMode.ArbitraryWaveform;
+                _rfsgSession.Arb.GenerationMode = RfsgWaveformGenerationMode.ContinuousWave;
                 _rfsgSession.Arb.IQRate = 50e6;
                 actualIQRate = _rfsgSession.Arb.IQRate;
                 frequencyOffset = actualIQRate / numSamples;
@@ -73,7 +72,7 @@ namespace L2CapstoneProject
         {
             //get phase and amplitude
             _rfsgSession.RF.PhaseOffset = (double)offset.Phase;
-            _rfsgSession.RF.PowerLevel = (double)offset.Amplitude;
+            _rfsgSession.RF.PowerLevel = power + (double)offset.Amplitude;
         }
 
         void DriverOperation_Warning(object sender, RfsgWarningEventArgs e)
@@ -109,17 +108,18 @@ namespace L2CapstoneProject
 
         void stimulateDUTwithCW(int numSamples)
         {
-            double[] iData, qData;
-            iData = new double[numSamples];
-            qData = new double[numSamples]; 
-            iData = sinePattern(numSamples, 1.0, 0.0, 1.0);
-            qData = sinePattern(numSamples, 1.0, 0.0, 1.0);
+            //  double[] iData, qData;
+            //  iData = new double[numSamples];
+            //  qData = new double[numSamples]; 
+            //   iData = sinePattern(numSamples, 1.0, 0.0, 1.0);
+            //  qData = sinePattern(numSamples, 1.0, 0.0, 1.0);
 
             //generate a cw to stimulate dut 
-            _rfsgSession.Arb.WriteWaveform("", iData, qData);
+            //  _rfsgSession.Arb.WriteWaveform("", iData, qData);
+            _rfsgSession.RF.Configure(frequency, power);
             _rfsgSession.Initiate();
-            System.Threading.Thread.Sleep(100);
-            _rfsgSession.Abort();
+            //System.Threading.Thread.Sleep(100);
+           // _rfsgSession.Abort();
 
         }
 

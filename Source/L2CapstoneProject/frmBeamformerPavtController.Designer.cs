@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lsvOffsets = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -58,6 +59,7 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RFsgTimer = new System.Windows.Forms.Timer(this.components);
             this.configurationGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.measurementLengthNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.frequencyNumeric)).BeginInit();
@@ -75,10 +77,10 @@
             this.lsvOffsets.FullRowSelect = true;
             this.lsvOffsets.GridLines = true;
             this.lsvOffsets.HideSelection = false;
-            this.lsvOffsets.Location = new System.Drawing.Point(26, 54);
-            this.lsvOffsets.Margin = new System.Windows.Forms.Padding(4);
+            this.lsvOffsets.Location = new System.Drawing.Point(17, 34);
+            this.lsvOffsets.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lsvOffsets.Name = "lsvOffsets";
-            this.lsvOffsets.Size = new System.Drawing.Size(470, 308);
+            this.lsvOffsets.Size = new System.Drawing.Size(315, 198);
             this.lsvOffsets.TabIndex = 1;
             this.lsvOffsets.UseCompatibleStateImageBehavior = false;
             this.lsvOffsets.View = System.Windows.Forms.View.Details;
@@ -98,10 +100,10 @@
             // 
             // btnAddOffset
             // 
-            this.btnAddOffset.Location = new System.Drawing.Point(26, 375);
-            this.btnAddOffset.Margin = new System.Windows.Forms.Padding(6);
+            this.btnAddOffset.Location = new System.Drawing.Point(17, 240);
+            this.btnAddOffset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddOffset.Name = "btnAddOffset";
-            this.btnAddOffset.Size = new System.Drawing.Size(150, 44);
+            this.btnAddOffset.Size = new System.Drawing.Size(100, 28);
             this.btnAddOffset.TabIndex = 2;
             this.btnAddOffset.Text = "&Add";
             this.btnAddOffset.UseVisualStyleBackColor = true;
@@ -110,10 +112,10 @@
             // btnEditOffset
             // 
             this.btnEditOffset.Enabled = false;
-            this.btnEditOffset.Location = new System.Drawing.Point(188, 375);
-            this.btnEditOffset.Margin = new System.Windows.Forms.Padding(6);
+            this.btnEditOffset.Location = new System.Drawing.Point(125, 240);
+            this.btnEditOffset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnEditOffset.Name = "btnEditOffset";
-            this.btnEditOffset.Size = new System.Drawing.Size(150, 44);
+            this.btnEditOffset.Size = new System.Drawing.Size(100, 28);
             this.btnEditOffset.TabIndex = 2;
             this.btnEditOffset.Text = "&Edit";
             this.btnEditOffset.UseVisualStyleBackColor = true;
@@ -129,11 +131,11 @@
             this.configurationGroupBox.Controls.Add(this.measurementOffsetNumeric);
             this.configurationGroupBox.Controls.Add(this.powerLevelNumeric);
             this.configurationGroupBox.Controls.Add(this.powerLevelLabel);
-            this.configurationGroupBox.Location = new System.Drawing.Point(56, 140);
-            this.configurationGroupBox.Margin = new System.Windows.Forms.Padding(6);
+            this.configurationGroupBox.Location = new System.Drawing.Point(37, 90);
+            this.configurationGroupBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.configurationGroupBox.Name = "configurationGroupBox";
-            this.configurationGroupBox.Padding = new System.Windows.Forms.Padding(6);
-            this.configurationGroupBox.Size = new System.Drawing.Size(596, 238);
+            this.configurationGroupBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.configurationGroupBox.Size = new System.Drawing.Size(397, 153);
             this.configurationGroupBox.TabIndex = 13;
             this.configurationGroupBox.TabStop = false;
             this.configurationGroupBox.Text = "Configuration";
@@ -145,8 +147,8 @@
             0,
             0,
             0});
-            this.measurementLengthNumeric.Location = new System.Drawing.Point(318, 75);
-            this.measurementLengthNumeric.Margin = new System.Windows.Forms.Padding(6);
+            this.measurementLengthNumeric.Location = new System.Drawing.Point(212, 48);
+            this.measurementLengthNumeric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.measurementLengthNumeric.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -158,7 +160,7 @@
             0,
             0});
             this.measurementLengthNumeric.Name = "measurementLengthNumeric";
-            this.measurementLengthNumeric.Size = new System.Drawing.Size(192, 31);
+            this.measurementLengthNumeric.Size = new System.Drawing.Size(128, 22);
             this.measurementLengthNumeric.TabIndex = 1;
             this.measurementLengthNumeric.Value = new decimal(new int[] {
             800,
@@ -174,8 +176,8 @@
             0,
             0,
             0});
-            this.frequencyNumeric.Location = new System.Drawing.Point(26, 75);
-            this.frequencyNumeric.Margin = new System.Windows.Forms.Padding(6);
+            this.frequencyNumeric.Location = new System.Drawing.Point(17, 48);
+            this.frequencyNumeric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.frequencyNumeric.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -187,7 +189,7 @@
             -1,
             -2147483648});
             this.frequencyNumeric.Name = "frequencyNumeric";
-            this.frequencyNumeric.Size = new System.Drawing.Size(192, 31);
+            this.frequencyNumeric.Size = new System.Drawing.Size(128, 22);
             this.frequencyNumeric.TabIndex = 1;
             this.frequencyNumeric.Value = new decimal(new int[] {
             1000000000,
@@ -198,30 +200,30 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(318, 137);
-            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label4.Location = new System.Drawing.Point(212, 89);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(249, 25);
+            this.label4.Size = new System.Drawing.Size(165, 17);
             this.label4.TabIndex = 1;
             this.label4.Text = "Measurement Offset (us)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(318, 44);
-            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label3.Location = new System.Drawing.Point(212, 28);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(258, 25);
+            this.label3.Size = new System.Drawing.Size(171, 17);
             this.label3.TabIndex = 1;
             this.label3.Text = "Measurement Length (us)";
             // 
             // frequencyLabel
             // 
             this.frequencyLabel.AutoSize = true;
-            this.frequencyLabel.Location = new System.Drawing.Point(26, 44);
-            this.frequencyLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.frequencyLabel.Location = new System.Drawing.Point(17, 28);
+            this.frequencyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.frequencyLabel.Name = "frequencyLabel";
-            this.frequencyLabel.Size = new System.Drawing.Size(228, 25);
+            this.frequencyLabel.Size = new System.Drawing.Size(150, 17);
             this.frequencyLabel.TabIndex = 1;
             this.frequencyLabel.Text = "Center Frequency [Hz]";
             // 
@@ -232,15 +234,15 @@
             0,
             0,
             0});
-            this.measurementOffsetNumeric.Location = new System.Drawing.Point(318, 167);
-            this.measurementOffsetNumeric.Margin = new System.Windows.Forms.Padding(6);
+            this.measurementOffsetNumeric.Location = new System.Drawing.Point(212, 107);
+            this.measurementOffsetNumeric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.measurementOffsetNumeric.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             this.measurementOffsetNumeric.Name = "measurementOffsetNumeric";
-            this.measurementOffsetNumeric.Size = new System.Drawing.Size(192, 31);
+            this.measurementOffsetNumeric.Size = new System.Drawing.Size(128, 22);
             this.measurementOffsetNumeric.TabIndex = 2;
             this.measurementOffsetNumeric.Value = new decimal(new int[] {
             100,
@@ -251,8 +253,8 @@
             // powerLevelNumeric
             // 
             this.powerLevelNumeric.DecimalPlaces = 2;
-            this.powerLevelNumeric.Location = new System.Drawing.Point(26, 167);
-            this.powerLevelNumeric.Margin = new System.Windows.Forms.Padding(6);
+            this.powerLevelNumeric.Location = new System.Drawing.Point(17, 107);
+            this.powerLevelNumeric.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.powerLevelNumeric.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -264,7 +266,7 @@
             -1,
             -2147483648});
             this.powerLevelNumeric.Name = "powerLevelNumeric";
-            this.powerLevelNumeric.Size = new System.Drawing.Size(192, 31);
+            this.powerLevelNumeric.Size = new System.Drawing.Size(128, 22);
             this.powerLevelNumeric.TabIndex = 2;
             this.powerLevelNumeric.Value = new decimal(new int[] {
             20,
@@ -275,20 +277,20 @@
             // powerLevelLabel
             // 
             this.powerLevelLabel.AutoSize = true;
-            this.powerLevelLabel.Location = new System.Drawing.Point(26, 137);
-            this.powerLevelLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.powerLevelLabel.Location = new System.Drawing.Point(17, 89);
+            this.powerLevelLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.powerLevelLabel.Name = "powerLevelLabel";
-            this.powerLevelLabel.Size = new System.Drawing.Size(191, 25);
+            this.powerLevelLabel.Size = new System.Drawing.Size(125, 17);
             this.powerLevelLabel.TabIndex = 2;
             this.powerLevelLabel.Text = "Power Level [dBm]";
             // 
             // btnDeleteOffset
             // 
             this.btnDeleteOffset.Enabled = false;
-            this.btnDeleteOffset.Location = new System.Drawing.Point(350, 375);
-            this.btnDeleteOffset.Margin = new System.Windows.Forms.Padding(6);
+            this.btnDeleteOffset.Location = new System.Drawing.Point(233, 240);
+            this.btnDeleteOffset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnDeleteOffset.Name = "btnDeleteOffset";
-            this.btnDeleteOffset.Size = new System.Drawing.Size(150, 44);
+            this.btnDeleteOffset.Size = new System.Drawing.Size(100, 28);
             this.btnDeleteOffset.TabIndex = 2;
             this.btnDeleteOffset.Text = "&Delete";
             this.btnDeleteOffset.UseVisualStyleBackColor = true;
@@ -297,53 +299,54 @@
             // resourceNameLabel
             // 
             this.resourceNameLabel.AutoSize = true;
-            this.resourceNameLabel.Location = new System.Drawing.Point(52, 31);
-            this.resourceNameLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.resourceNameLabel.Location = new System.Drawing.Point(35, 20);
+            this.resourceNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.resourceNameLabel.Name = "resourceNameLabel";
-            this.resourceNameLabel.Size = new System.Drawing.Size(268, 25);
+            this.resourceNameLabel.Size = new System.Drawing.Size(179, 17);
             this.resourceNameLabel.TabIndex = 11;
             this.resourceNameLabel.Text = "Generator Resource Name";
             // 
             // errorLabel
             // 
             this.errorLabel.AutoSize = true;
-            this.errorLabel.Location = new System.Drawing.Point(50, 858);
-            this.errorLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.errorLabel.Location = new System.Drawing.Point(33, 549);
+            this.errorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(156, 25);
+            this.errorLabel.Size = new System.Drawing.Size(103, 17);
             this.errorLabel.TabIndex = 15;
             this.errorLabel.Text = "Current Status:";
             // 
             // rfsgNameComboBox
             // 
-            this.rfsgNameComboBox.Location = new System.Drawing.Point(56, 62);
-            this.rfsgNameComboBox.Margin = new System.Windows.Forms.Padding(6);
+            this.rfsgNameComboBox.Location = new System.Drawing.Point(37, 39);
+            this.rfsgNameComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rfsgNameComboBox.Name = "rfsgNameComboBox";
-            this.rfsgNameComboBox.Size = new System.Drawing.Size(236, 33);
+            this.rfsgNameComboBox.Size = new System.Drawing.Size(159, 24);
             this.rfsgNameComboBox.TabIndex = 12;
             // 
             // errorTextBox
             // 
-            this.errorTextBox.Location = new System.Drawing.Point(56, 888);
-            this.errorTextBox.Margin = new System.Windows.Forms.Padding(6);
+            this.errorTextBox.Location = new System.Drawing.Point(37, 569);
+            this.errorTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.errorTextBox.Multiline = true;
             this.errorTextBox.Name = "errorTextBox";
             this.errorTextBox.ReadOnly = true;
             this.errorTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.errorTextBox.Size = new System.Drawing.Size(1116, 112);
+            this.errorTextBox.Size = new System.Drawing.Size(745, 73);
             this.errorTextBox.TabIndex = 17;
             this.errorTextBox.TabStop = false;
             this.errorTextBox.Text = "No error.";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(760, 56);
-            this.btnStart.Margin = new System.Windows.Forms.Padding(6);
+            this.btnStart.Location = new System.Drawing.Point(507, 36);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(150, 44);
+            this.btnStart.Size = new System.Drawing.Size(100, 28);
             this.btnStart.TabIndex = 14;
             this.btnStart.Text = "&Start";
             this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // groupBox1
             // 
@@ -351,53 +354,54 @@
             this.groupBox1.Controls.Add(this.btnEditOffset);
             this.groupBox1.Controls.Add(this.btnDeleteOffset);
             this.groupBox1.Controls.Add(this.btnAddOffset);
-            this.groupBox1.Location = new System.Drawing.Point(56, 390);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
+            this.groupBox1.Location = new System.Drawing.Point(37, 250);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox1.Size = new System.Drawing.Size(596, 442);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(397, 283);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Phase and Amplitude Offsets";
             // 
             // rfsaNameComboBox
             // 
-            this.rfsaNameComboBox.Location = new System.Drawing.Point(344, 62);
-            this.rfsaNameComboBox.Margin = new System.Windows.Forms.Padding(6);
+            this.rfsaNameComboBox.Location = new System.Drawing.Point(229, 39);
+            this.rfsaNameComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rfsaNameComboBox.Name = "rfsaNameComboBox";
-            this.rfsaNameComboBox.Size = new System.Drawing.Size(236, 33);
+            this.rfsaNameComboBox.Size = new System.Drawing.Size(159, 24);
             this.rfsaNameComboBox.TabIndex = 12;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(340, 31);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Location = new System.Drawing.Point(227, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(256, 25);
+            this.label1.Size = new System.Drawing.Size(169, 17);
             this.label1.TabIndex = 11;
             this.label1.Text = "Analyzer Resource Name";
             // 
             // btnStop
             // 
             this.btnStop.Enabled = false;
-            this.btnStop.Location = new System.Drawing.Point(922, 56);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(6);
+            this.btnStop.Location = new System.Drawing.Point(615, 36);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(150, 44);
+            this.btnStop.Size = new System.Drawing.Size(100, 28);
             this.btnStop.TabIndex = 14;
             this.btnStop.Text = "St&op";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.lsvResults);
-            this.groupBox2.Location = new System.Drawing.Point(684, 142);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(456, 91);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(492, 690);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Size = new System.Drawing.Size(328, 442);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Results";
@@ -405,10 +409,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 46);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(12, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(168, 25);
+            this.label2.Size = new System.Drawing.Size(110, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "Relative Results";
             // 
@@ -421,10 +424,10 @@
             this.lsvResults.FullRowSelect = true;
             this.lsvResults.GridLines = true;
             this.lsvResults.HideSelection = false;
-            this.lsvResults.Location = new System.Drawing.Point(22, 73);
-            this.lsvResults.Margin = new System.Windows.Forms.Padding(4);
+            this.lsvResults.Location = new System.Drawing.Point(15, 47);
+            this.lsvResults.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lsvResults.Name = "lsvResults";
-            this.lsvResults.Size = new System.Drawing.Size(438, 537);
+            this.lsvResults.Size = new System.Drawing.Size(293, 345);
             this.lsvResults.TabIndex = 0;
             this.lsvResults.UseCompatibleStateImageBehavior = false;
             this.lsvResults.View = System.Windows.Forms.View.Details;
@@ -444,11 +447,15 @@
             this.columnHeader6.Text = "Amplitude (dB)";
             this.columnHeader6.Width = 188;
             // 
+            // RFsgTimer
+            // 
+            this.RFsgTimer.Tick += new System.EventHandler(this.RFsgTimer_Tick);
+            // 
             // frmBeamformerPavtController
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1212, 1044);
+            this.ClientSize = new System.Drawing.Size(808, 668);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.configurationGroupBox);
@@ -461,7 +468,7 @@
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBeamformerPavtController";
@@ -513,6 +520,7 @@
         public System.Windows.Forms.NumericUpDown frequencyNumeric;
         public System.Windows.Forms.NumericUpDown powerLevelNumeric;
         public System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Timer RFsgTimer;
     }
 }
 

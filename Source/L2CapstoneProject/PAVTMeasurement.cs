@@ -15,9 +15,9 @@ namespace L2CapstoneProject
         double timeout;
         int numSteps;
         
-        public PAVTMeasurement(string resourceName)
+        public PAVTMeasurement(RFmxInstrMX session)
         {
-            instrSession = new RFmxInstrMX(resourceName, "AnalysisOnly=1");
+            instrSession = session;
             specAn = instrSession.GetSpecAnSignalConfiguration();
             specAn.SelectMeasurements("", RFmxSpecAnMXMeasurementTypes.Pavt, true);
             specAn.Pavt.Configuration.ConfigureMeasurementLocationType("", RFmxSpecAnMXPavtMeasurementLocationType.Trigger);

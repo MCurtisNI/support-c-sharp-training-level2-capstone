@@ -5,6 +5,8 @@ using NationalInstruments.RFmx.InstrMX;
 using NationalInstruments.ModularInstruments.SystemServices.DeviceServices;
 using System.Collections.Generic;
 using NationalInstruments;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.InteropServices;
 
 namespace L2CapstoneProject
 {
@@ -14,6 +16,7 @@ namespace L2CapstoneProject
         NIRfsg _rfsgSession;
         RFmxInstrMX instr;
         List<PhaseAmplitudeOffset> offsets;
+        bool sessionsCreated = false;
 
         public frmBeamformerPavtController()
         {
@@ -40,7 +43,18 @@ namespace L2CapstoneProject
         
         private void btnStart_Click(object sender, EventArgs e)
         {
-            StartGeneration();
+            SetButtonState(true);
+            //instr = new RFmxInstrMX(rfsaNameComboBox.SelectedItem.ToString(), "AnalysisOnly=1");
+            try
+            {
+                _rfsgSession = new NIRfsg(rfsgNameComboBox.SelectedItem.ToString(), false, true);
+            }
+            catch
+            {
+                MessageBox.Show("error in session creation");
+            }
+            sessionsCreated = true;
+            TestSteppedBeamformer();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -93,11 +107,6 @@ namespace L2CapstoneProject
             }
         }
 
-        private void BtnStart_Click(object sender, EventArgs e)
-        {
-            TestSteppedBeamformer();
-        }
-
         private void frmBeamformerPavtController_FormClosing(object sender, FormClosingEventArgs e)
         {
             CloseInstruments();
@@ -109,7 +118,7 @@ namespace L2CapstoneProject
 
         private void TestSteppedBeamformer()
         {
-            var beamformer = new SimulatedSteppedBeamformer();
+            var beamformer = new SimulatedSteppedBeamformer(_rfsgSession, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value);
             beamformer.Connect();
             foreach (var offset in offsets)
             {
@@ -142,7 +151,8 @@ namespace L2CapstoneProject
 
             try
             {
-                PAVTMeasurement pavtMeasure = new PAVTMeasurement(rfsaNameComboBox.Text);
+
+                PAVTMeasurement pavtMeasure = new PAVTMeasurement(instr);
                 pavtMeasure.configureMeasurements(numSteps, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value, (double)measurementOffsetNumeric.Value, (double)measurementLengthNumeric.Value);
 
                 foreach (var offset in offsets)
@@ -168,7 +178,7 @@ namespace L2CapstoneProject
             try
             {
                 
-                SimulatedSteppedBeamformer simulatedSteppedBF = new SimulatedSteppedBeamformer(rfsgNameComboBox.Text, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value);
+                SimulatedSteppedBeamformer simulatedSteppedBF = new SimulatedSteppedBeamformer(_rfsgSession, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value);
                 simulatedSteppedBF.Connect();
 
                 for(int i = 0; i < offsets.Count; i++)
@@ -228,7 +238,7 @@ namespace L2CapstoneProject
         private void AbortGeneration()
         {
             SetButtonState(false);
-
+       
             if (_rfsgSession?.IsDisposed == false)
             {
                 _rfsgSession.Abort();
@@ -237,6 +247,7 @@ namespace L2CapstoneProject
         private void CloseInstruments()
         {
             AbortGeneration();
+            sessionsCreated = false;
             _rfsgSession?.Close();
 
             instr?.Close();
@@ -338,8 +349,25 @@ namespace L2CapstoneProject
             }
         }
 
+
         #endregion
 
-    
+ 
+
+        private void RFsgTimer_Tick(object sender, EventArgs e)
+        {
+            if(sessionsCreated == true)
+            {
+                CheckStatus();
+            }
+        }
+
+        private void CheckStatus()
+        {
+            string statusMessage = "Generation: " + _rfsgSession.CheckGenerationStatus().ToString() + "\n" +
+                                   "Analysis: " + instr.CheckAcquisitionStatus(out bool done).ToString();
+                                
+          SetStatus(statusMessage); ;
+        }
     }
 }
