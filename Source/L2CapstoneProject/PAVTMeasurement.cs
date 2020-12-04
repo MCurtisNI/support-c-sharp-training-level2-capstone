@@ -25,7 +25,7 @@ namespace L2CapstoneProject
         }
 
         //configure measurement settings
-        public void configureMeasurements(int numberOfSteps, double centerFrequency, double referenceLevel, double measurementOffsetTime, double measurementTime)
+        public void StartMeasurement(int numberOfSteps, double centerFrequency, double referenceLevel, double measurementOffsetTime, double measurementTime)
         {
             numSteps = numberOfSteps;
             specAn.ConfigureRF("", centerFrequency, referenceLevel, 1.0);

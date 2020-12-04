@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using NationalInstruments;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.InteropServices;
+using NationalInstruments.Restricted;
 
 namespace L2CapstoneProject
 {
@@ -44,21 +45,13 @@ namespace L2CapstoneProject
         private void btnStart_Click(object sender, EventArgs e)
         {
             SetButtonState(true);
-            //instr = new RFmxInstrMX(rfsaNameComboBox.SelectedItem.ToString(), "AnalysisOnly=1");
-            try
-            {
-                _rfsgSession = new NIRfsg(rfsgNameComboBox.SelectedItem.ToString(), false, true);
-            }
-            catch
-            {
-                MessageBox.Show("error in session creation");
-            }
-            sessionsCreated = true;
-            TestSteppedBeamformer();
+            StartGeneration();
+       
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
+            SetButtonState(false);
             AbortGeneration();
         }
         
@@ -124,7 +117,7 @@ namespace L2CapstoneProject
             {
                 beamformer.LoadOffset(offset);
                 //measure
-                var result = MessageBox.Show($"Measure\n\nExpected Result:\nPhase: {offset.Phase}\nAmplitude: {offset.Amplitude}");
+                var result = MessageBox.Show($"Measure\n\nExpected Result:\nPhase: {offset.Phase}\nAmplitude: {powerLevelNumeric.Value + offset.Amplitude}");
 
             }
             beamformer.Disconnect();
@@ -139,58 +132,46 @@ namespace L2CapstoneProject
             beamformer.InitiateSequence("sequence1");
             beamformer.Disconnect();
         }
-
-        void startMeasurements()
-        {
-            int numSteps = offsets.Count;
-            double[] amplitudes = new double[numSteps];
-            double[] phases = new double[numSteps];
-            Tuple<double[], double[]> measurements;
-            decimal amp;
-            decimal phase;
-
-            try
-            {
-
-                PAVTMeasurement pavtMeasure = new PAVTMeasurement(instr);
-                pavtMeasure.configureMeasurements(numSteps, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value, (double)measurementOffsetNumeric.Value, (double)measurementLengthNumeric.Value);
-
-                foreach (var offset in offsets)
-                {
-                    measurements = pavtMeasure.GetMeasurements();
-                    phase = Convert.ToDecimal(measurements.Item1);
-                    amp = Convert.ToDecimal(measurements.Item2);
-                    PhaseAmplitudeOffset newValues = new PhaseAmplitudeOffset(phase, amp);
-                    lsvResults.Items.Add(CreateListViewItem(newValues)); // add results to results listview
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowError("startMeasurements()", ex);
-            }
-        }
-        
+     
        
         void StartGeneration()
         {
             //bool isMeasurementComplete = false; 
-
+            Tuple<double[], double[]> measurements;
+            decimal amp;
+            decimal phase;
             try
             {
-                
+
+                instr = new RFmxInstrMX(rfsaNameComboBox.SelectedItem.ToString(), "AnalysisOnly=1");
+                _rfsgSession = new NIRfsg(rfsgNameComboBox.SelectedItem.ToString(), false, true);
+
                 SimulatedSteppedBeamformer simulatedSteppedBF = new SimulatedSteppedBeamformer(_rfsgSession, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value);
                 simulatedSteppedBF.Connect();
 
+                PAVTMeasurement measurement = new PAVTMeasurement(instr);
+                measurement.StartMeasurement(offsets.Count, (double)frequencyNumeric.Value, (double)powerLevelNumeric.Value, (double)measurementOffsetNumeric.Value/1000000, (double)measurementLengthNumeric.Value/1000000);
+                //measurement will occur after each trigger is sent from Beamformer
+
                 for(int i = 0; i < offsets.Count; i++)
                 {
+
                     simulatedSteppedBF.LoadOffset(offsets[i]); // set phase offset and power level
-                    ComplexWaveform<ComplexDouble> IQData = simulatedSteppedBF.createWaveform(offsets); //creates complex waveform data
-                    simulatedSteppedBF.writeWaveform(IQData); //generate waveform
-                    this.startMeasurements(); //take measurements
-                    simulatedSteppedBF.Disconnect();
+                    _rfsgSession.Triggers.   //send a software trigger
+
+                    //ComplexWaveform<ComplexDouble> IQData = simulatedSteppedBF.createWaveform(offsets); //creates complex waveform data
+                    //simulatedSteppedBF.writeWaveform(IQData); //generate waveform
+                    
                 }
                 
-                
+
+                simulatedSteppedBF.Disconnect();
+                measurements = measurement.GetMeasurements();
+                phase = Convert.ToDecimal(measurements.Item1);
+                amp = Convert.ToDecimal(measurements.Item2);
+                PhaseAmplitudeOffset newValues = new PhaseAmplitudeOffset(phase, amp);
+                lsvResults.Items.Add(CreateListViewItem(newValues)); // add results to results listview
+
             }
             catch(Exception ex)
             {
@@ -369,5 +350,7 @@ namespace L2CapstoneProject
                                 
           SetStatus(statusMessage); ;
         }
+
+  
     }
 }
